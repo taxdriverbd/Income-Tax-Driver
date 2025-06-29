@@ -1,28 +1,44 @@
 <!DOCTYPE html>
 <html lang="bn">
 <head>
-  <meta charset="UTF-8">
+  <meta charset="UTF-8" />
   <title>যোগাযোগ</title>
+  <link rel="stylesheet" href="style.css" />
 </head>
 <body>
-  <h1>📞 আমার সঙ্গে যোগাযোগ করুন</h1>
-  <p>আপনি নিচের মাধ্যমগুলোতে আমার সঙ্গে যোগাযোগ করতে পারেন:</p>
+  <header>
+    <h1>📞 যোগাযোগ</h1>
+    <nav>
+      <a href="index.html">🏠 হোম</a>
+      <a href="about.html">🙋‍♂️ আমি</a>
+      <a href="contact.html">📞 যোগাযোগ</a>
+      <a href="calculator.html">🧮 ক্যালকুলেটর</a>
+      <a href="shop.html">🛍️ পণ্য</a>
+      <a href="education.html">📚 শিক্ষা</a>
+    </nav>
+  </header>
 
-  <ul>
-    <li><strong>📧 ইমেইল:</strong> taxdriverbd@gmail.com</li>
-    <li><strong>📱 মোবাইল:</strong> ০১৭০০-০০০০০০</li>
-    <li><strong>🌐 ওয়েবসাইট:</strong> <a href="https://taxdriverbd.github.io/Income-Tax-Driver/" target="_blank">Income Tax Driver</a></li>
-    <li><strong>📘 ফেসবুক পেজ:</strong> <a href="#">(তোমার ফেসবুক পেজ লিংক এখানে)</a></li>
-  </ul>
+  <main>
+    <section>
+      <h2>আমাকে মেসেজ পাঠান</h2>
+      <form action="mailto:your-email@example.com" method="post" enctype="text/plain">
+        <label for="name">নাম:</label><br />
+        <input type="text" id="name" name="name" required /><br /><br />
 
-  <p>আমাকে মেসেজ পাঠাতে চাইলে, নিচের ফর্মটি পূরণ করুন (ডেমো):</p>
+        <label for="email">ইমেইল:</label><br />
+        <input type="email" id="email" name="email" required /><br /><br />
 
-  <form>
-    <label>আপনার নাম: <input type="text" name="name"></label><br><br>
-    <label>ইমেইল: <input type="email" name="email"></label><br><br>
-    <label>বার্তা: <br><textarea name="message" rows="5" cols="40"></textarea></label><br><br>
-    <button type="submit">পাঠান</button>
-  </form>
+        <label for="message">মেসেজ:</label><br />
+        <textarea id="message" name="message" rows="5" required></textarea><br /><br />
 
+        <input type="submit" value="পাঠাও" />
+        <input type="reset" value="রিসেট" />
+      </form>
+    </section>
+  </main>
+
+  <footer>
+    <p>© ২০২৫ কানজুস সায়াদাত চমন</p>
+  </footer>
 </body>
 </html>
