@@ -1,21 +1,90 @@
 <!DOCTYPE html>
 <html lang="bn">
 <head>
-  <meta charset="UTF-8">
+  <meta charset="UTF-8" />
   <title>আয়কর ক্যালকুলেটর</title>
+  <link rel="stylesheet" href="style.css" />
+  <script>
+    function calculateTax() {
+      const incomeInput = document.getElementById('income').value;
+      const category = document.getElementById('category').value;
+      let income = parseFloat(incomeInput);
+      if (isNaN(income) || income < 0) {
+        alert('অনুগ্রহ করে বৈধ আয়ের পরিমাণ লিখুন');
+        return;
+      }
+
+      // Tax-free limits by category
+      let taxFree = 350000; // সাধারণ
+      if (category === 'female' || category === 'senior') taxFree = 400000;
+      else if (category === 'third_gender' || category === 'disabled') taxFree = 475000;
+      else if (category === 'freedom_fighter') taxFree = 500000;
+
+      let taxableIncome = income - taxFree;
+      if (taxableIncome <= 0) {
+        document.getElementById('result').innerText = 'কোন কর প্রযোজ্য নয়।';
+        return;
+      }
+
+      let tax = 0;
+      let slabs = [
+        { limit: 100000, rate: 0.05 },
+        { limit: 400000, rate: 0.10 },
+        { limit: 500000, rate: 0.15 },
+        { limit: 500000, rate: 0.20 }
+      ];
+
+      let remaining = taxableIncome;
+
+      for (let slab of slabs) {
+        let slabAmount = Math.min(remaining, slab.limit);
+        tax += slabAmount * slab.rate;
+        remaining -= slabAmount;
+        if (remaining <= 0) break;
+      }
+
+      if (remaining > 0) tax += remaining * 0.25;
+
+      document.getElementById('result').innerText = 'আপনার কর প্রাক্কলন: ৳' + tax.toFixed(2);
+    }
+  </script>
 </head>
 <body>
-  <h1>আয়কর ক্যালকুলেটর</h1>
-  <p>প্রথম ৩.৫ লাখ টাকা → কর মুক্ত<br>
-     পরবর্তী ১ লাখ → ৫%<br>
-     পরবর্তী ৪ লাখ → ১০%<br>
-     পরবর্তী ৫ লাখ → ১৫%<br>
-     পরবর্তী ৫ লাখ → ২০%<br>
-     অবশিষ্ট আয়ের উপর → ২৫%<br><br>
-     বিশেষ ছাড়:<br>
-     - নারী ও ৬৫+ বয়সী করদাতা: করমুক্ত ৪ লাখ টাকা<br>
-     - তৃতীয় লিঙ্গ ও প্রতিবন্ধী: করমুক্ত ৪.৭৫ লাখ টাকা<br>
-     - যুদ্ধাহত গেজেটেড মুক্তিযোদ্ধা: করমুক্ত ৫ লাখ টাকা
-  </p>
+  <header>
+    <h1>🧮 আয়কর ক্যালকুলেটর</h1>
+    <nav>
+      <a href="index.html">🏠 হোম</a>
+      <a href="about.html">🙋‍♂️ আমি</a>
+      <a href="contact.html">📞 যোগাযোগ</a>
+      <a href="calculator.html">🧮 ক্যালকুলেটর</a>
+      <a href="shop.html">🛍️ পণ্য</a>
+      <a href="education.html">📚 শিক্ষা</a>
+    </nav>
+  </header>
+
+  <main>
+    <section>
+      <label for="income">মোট বার্ষিক আয় (টাকা):</label><br />
+      <input type="number" id="income" /><br /><br />
+
+      <label for="category">করদাতার ধরন নির্বাচন করুন:</label><br />
+      <select id="category">
+        <option value="general">পুরুষ / সাধারণ করদাতা</option>
+        <option value="female">মহিলা করদাতা</option>
+        <option value="senior">৬৫ বছর তদুর্ধ্ব করদাতা</option>
+        <option value="third_gender">তৃতীয় লিঙ্গ</option>
+        <option value="disabled">প্রতিবন্ধী</option>
+        <option value="freedom_fighter">গেজেটেড যুদ্ধাহত মুক্তিযোদ্ধা</option>
+      </select><br /><br />
+
+      <button onclick="calculateTax()">হিসাব করুন</button><br /><br />
+
+      <div id="result" style="font-weight:bold;"></div>
+    </section>
+  </main>
+
+  <footer>
+    <p>© ২০২৫ কানজুস সায়াদাত চমন</p>
+  </footer>
 </body>
 </html>
