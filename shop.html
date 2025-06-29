@@ -1,0 +1,252 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>?-??? ?????</title>
+  <style>
+    body {
+      font-family: 'Arial', sans-serif;
+      background-color: #f9f9f9;
+      padding: 20px;
+      max-width: 1100px;
+      margin: auto;
+    }
+    h1 {
+      color: #007bff;
+      text-align: center;
+      margin-bottom: 30px;
+    }
+    .grid-container {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 20px;
+    }
+    .product {
+      background: #fff;
+      border-radius: 10px;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+      padding: 20px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+    }
+    .product h2 {
+      margin-bottom: 10px;
+      color: #333;
+    }
+    .product p {
+      color: #555;
+      flex-grow: 1;
+    }
+    .links {
+      margin-top: 15px;
+    }
+    .download-link, .preview-link {
+      display: inline-block;
+      margin-right: 10px;
+      padding: 10px 15px;
+      border-radius: 5px;
+      text-decoration: none;
+      color: white;
+      font-weight: bold;
+      cursor: pointer;
+      user-select: none;
+    }
+    .download-link {
+      background-color: #28a745;
+    }
+    .download-link:hover {
+      background-color: #218838;
+    }
+    .preview-link {
+      background-color: #007bff;
+    }
+    .preview-link:hover {
+      background-color: #0056b3;
+    }
+    /* Modal styles */
+    .modal {
+      display: none; 
+      position: fixed; 
+      z-index: 1000; 
+      left: 0; top: 0; width: 100%; height: 100%; 
+      overflow: auto; 
+      background-color: rgba(0,0,0,0.6);
+    }
+    .modal-content {
+      background-color: #fefefe;
+      margin: 5% auto;
+      padding: 20px;
+      border-radius: 8px;
+      max-width: 90%;
+      max-height: 80%;
+      overflow: auto;
+      position: relative;
+    }
+    .close-btn {
+      color: #aaa;
+      float: right;
+      font-size: 28px;
+      font-weight: bold;
+      cursor: pointer;
+      user-select: none;
+      position: absolute;
+      right: 15px;
+      top: 5px;
+    }
+    .close-btn:hover {
+      color: #000;
+    }
+    iframe {
+      width: 100%;
+      height: 600px;
+      border: none;
+    }
+    /* Upload form styles */
+    form {
+      margin-top: 40px;
+      background: #fff;
+      padding: 20px;
+      border-radius: 10px;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+    }
+    form h2 {
+      margin-bottom: 15px;
+      color: #007bff;
+    }
+    label {
+      display: block;
+      margin: 12px 0 6px 0;
+      font-weight: bold;
+    }
+    input[type="text"], input[type="file"] {
+      width: 100%;
+      padding: 8px;
+      box-sizing: border-box;
+      border-radius: 5px;
+      border: 1px solid #ccc;
+    }
+    button {
+      margin-top: 15px;
+      padding: 10px 20px;
+      background-color: #007bff;
+      color: white;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      font-weight: bold;
+    }
+    button:hover {
+      background-color: #0056b3;
+    }
+    /* Footer link */
+    .home-link {
+      display: block;
+      margin-top: 40px;
+      text-align: center;
+      font-weight: bold;
+      text-decoration: none;
+      color: #007bff;
+    }
+    .home-link:hover {
+      text-decoration: underline;
+    }
+  </style>
+</head>
+<body>
+
+  <h1>?? ?-??? ?????</h1>
+
+  <div class="grid-container">
+
+    <div class="product">
+      <h2>?. ???? ???? ?? (PDF)</h2>
+      <p>?????????? ???? ??????????? ???????? ??? ????? ???? ???? ??? ????????????? ???? ???????</p>
+      <div class="links">
+        <a class="download-link" href="books/aykor_guide.pdf" download>?? ???????</a>
+        <a class="preview-link" href="#" data-pdf="books/aykor_guide.pdf">??? ???????</a>
+      </div>
+    </div>
+
+    <div class="product">
+      <h2>?. ???? ?????????? ??</h2>
+      <p>????? ???, ???, ?????? ? ??????? ???? ????????? ???? ????? ???</p>
+      <div class="links">
+        <a class="download-link" href="books/math_practice.pdf" download>?? ???????</a>
+        <a class="preview-link" href="#" data-pdf="books/math_practice.pdf">??? ???????</a>
+      </div>
+    </div>
+
+    <div class="product">
+      <h2>?. VAT ? SD ????????? ???????</h2>
+      <p>????? ?????? ?? (VAT) ? ??????? ????? (SD) ???????? ????????? ???????? ?? ???</p>
+      <div class="links">
+        <a class="download-link" href="books/vat_sd_intro.pdf" download>?? ???????</a>
+        <a class="preview-link" href="#" data-pdf="books/vat_sd_intro.pdf">??? ???????</a>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- PDF Preview Modal -->
+  <div id="pdfModal" class="modal">
+    <div class="modal-content">
+      <span class="close-btn" id="modalClose">&times;</span>
+      <iframe id="pdfIframe" src="" title="PDF Preview"></iframe>
+    </div>
+  </div>
+
+  <!-- Upload form (?? ????? ???? ????, ?????????? ????? ??????? ????) -->
+  <form id="uploadForm">
+    <h2>?? ???? ?? ????? ???? (Coming Soon)</h2>
+    <label for="bookTitle">????? ???</label>
+    <input type="text" id="bookTitle" name="bookTitle" placeholder="????? ??? ?????" required />
+
+    <label for="bookFile">PDF ???? ???????? ????</label>
+    <input type="file" id="bookFile" name="bookFile" accept="application/pdf" required />
+
+    <button type="submit">????? ????</button>
+    <p style="font-size: 0.9em; color: #666; margin-top: 10px;">
+      * ?? ?????? ??? ????????? ?????????? ????? ?????? ??????? ???? ??????? ???? ????? ????????
+    </p>
+  </form>
+
+  <a class="home-link" href="index.html">? ???? ???? ???</a>
+
+  <script>
+    // Modal handling for PDF preview
+    const modal = document.getElementById('pdfModal');
+    const iframe = document.getElementById('pdfIframe');
+    const closeBtn = document.getElementById('modalClose');
+
+    document.querySelectorAll('.preview-link').forEach(link => {
+      link.addEventListener('click', e => {
+        e.preventDefault();
+        const pdfUrl = e.target.getAttribute('data-pdf');
+        iframe.src = pdfUrl;
+        modal.style.display = 'block';
+      });
+    });
+
+    closeBtn.addEventListener('click', () => {
+      modal.style.display = 'none';
+      iframe.src = '';
+    });
+
+    window.addEventListener('click', e => {
+      if (e.target === modal) {
+        modal.style.display = 'none';
+        iframe.src = '';
+      }
+    });
+
+    // Upload form submit event (currently no real upload)
+    document.getElementById('uploadForm').addEventListener('submit', e => {
+      e.preventDefault();
+      alert('?? ??????? ???? ??????? ???? ????? ???????? ??? ??? ??? ??? ???');
+    });
+  </script>
+
+</body>
+</html>
